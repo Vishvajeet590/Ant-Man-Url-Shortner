@@ -1,0 +1,7 @@
+2022/02/15 00:26:48 --> unary interceptor: /AntmanServer.AntmanUserRoutes/CreateNewUser
+2022/02/15 00:26:52 --> unary interceptor: /AntmanServer.AntmanUserRoutes/LoginUser
+2022/02/15 00:26:56 --> unary interceptor: /AntmanServer.AntmanUserRoutes/GetUrlStat
+2022/02/15 00:26:59 --> unary interceptor: /AntmanServer.AntmanUserRoutes/GetUrlStatList
+2022/02/15 00:27:02 --> unary interceptor: /UrlServer.AntmanUrlRoutes/GetShortUrl
+2022/02/15 00:27:06 --> unary interceptor: /UrlServer.AntmanUrlRoutes/DeleteUrl
+2022/02/15 00:27:09 --> unary interceptor: /UrlServer.AntmanUrlRoutes/GetLongUrl

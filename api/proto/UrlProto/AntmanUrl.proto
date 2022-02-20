@@ -1,0 +1,62 @@
+syntax = "proto3";
+package UrlServer;
+option go_package="./Antman";
+import "google/api/annotations.proto";
+
+//message ConfigRequest{
+//  string apiKey =1;
+//  string instanceName =2;
+//}
+//message KeyResponse{
+//  bool success = 1;
+//  int32 startRange =2;
+//  int32 endRange =3;
+//}
+
+message ShortUrlRequest{
+  string originalUrl =1;
+  string customAlias =2;
+}
+message ShortUrlResponse {
+  bool success = 1;
+  string shortUrlKey =2;
+}
+
+message DeleteUrlRequest{
+  string shortUrl =1;
+  int32 ownerid =2;
+}
+message DeleteUrlResponse {
+  bool success = 1;
+}
+
+
+message LongUrlRequest{
+  string shortUrl =1;
+}
+message LongUrlResponse {
+  bool success = 1;
+  string LongUrl =2;
+}
+
+
+
+service AntmanUrlRoutes{
+  rpc GetShortUrl(ShortUrlRequest) returns(ShortUrlResponse){
+    option(google.api.http)={
+      post:"/v1/short"
+      body:"*"
+    };
+  }
+  rpc DeleteUrl(DeleteUrlRequest) returns(DeleteUrlResponse){
+    option(google.api.http)={
+      post:"/v1/delete"
+      body:"*"
+    };
+  }
+  rpc GetLongUrl(LongUrlRequest) returns(LongUrlResponse){
+    option(google.api.http)={
+      get:"/v1/resolve/{shortUrl}"
+    };
+  }
+}

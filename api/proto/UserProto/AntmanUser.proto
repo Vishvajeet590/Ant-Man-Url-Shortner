@@ -1,0 +1,81 @@
+syntax = "proto3";
+package AntmanServer;
+option go_package="./Antman";
+import "google/api/annotations.proto";
+
+message SignUpRequest{
+  string username=1;
+  string password=2;
+  string email=3;
+}
+message SignUpResponse {
+  bool success = 1;
+  string message=2;
+}
+
+message LoginRequest{
+  string email =1;
+  string password =2;
+}
+message LoginResponse {
+  bool success = 1;
+  string message=2;
+  string jwt=3;
+}
+
+message GetStatRequest{
+  string jwt =1;
+  string shortUrl =2;
+}
+message GetStatResponse {
+  bool success = 1;
+  string message =2;
+  string longUrl = 3;
+  string shortUrl = 4;
+  int32 redirects =5;
+  int32 ownerId = 6;
+  string createdAt = 7;
+}
+
+message GetStatListRequest{
+  string jwt =1;
+}
+
+message GetStatListResponse{
+  bool success =1;
+  string message = 2;
+  repeated GetStatResponse statlList = 3;
+}
+
+
+
+
+
+service AntmanUserRoutes{
+  rpc CreateNewUser(SignUpRequest) returns(SignUpResponse){
+    option(google.api.http)={
+      post:"/v1/signup"
+      body:"*"
+    };
+  }
+  rpc LoginUser(LoginRequest) returns(LoginResponse){
+    option(google.api.http)={
+      post:"/v1/login"
+      body:"*"
+    };
+  }
+
+
+  rpc GetUrlStat(GetStatRequest) returns(GetStatResponse){
+    option(google.api.http)={
+      get:"/v1/stat/{shortUrl}"
+    };
+  }
+
+  rpc GetUrlStatList(GetStatListRequest) returns(GetStatListResponse){
+    option(google.api.http)={
+      get:"/v1/list"
+    };
+  }
+
+}
