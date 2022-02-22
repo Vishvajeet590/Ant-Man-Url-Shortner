@@ -1,8 +1,8 @@
 package main
 
 import (
-	"Ant-Man-Url/api/hadler/UrlHandler"
-	"Ant-Man-Url/api/hadler/UserHandler"
+	"Ant-Man-Url/api/handler/UrlHandler"
+	"Ant-Man-Url/api/handler/UserHandler"
 	"Ant-Man-Url/api/middleware"
 	Antman "Ant-Man-Url/api/proto/UrlProto"
 	Antman2 "Ant-Man-Url/api/proto/UserProto"
