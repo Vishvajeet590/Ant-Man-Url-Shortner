@@ -1,0 +1,196 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "api/proto/UrlProto/AntmanUrl.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "AntmanUrlRoutes"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/delete": {
+      "post": {
+        "operationId": "AntmanUrlRoutes_DeleteUrl",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/UrlServerDeleteUrlResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UrlServerDeleteUrlRequest"
+            }
+          }
+        ],
+        "tags": [
+          "AntmanUrlRoutes"
+        ]
+      }
+    },
+    "/v1/resolve/{shortUrl}": {
+      "get": {
+        "operationId": "AntmanUrlRoutes_GetLongUrl",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/UrlServerLongUrlResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "shortUrl",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "AntmanUrlRoutes"
+        ]
+      }
+    },
+    "/v1/short": {
+      "post": {
+        "operationId": "AntmanUrlRoutes_GetShortUrl",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/UrlServerShortUrlResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UrlServerShortUrlRequest"
+            }
+          }
+        ],
+        "tags": [
+          "AntmanUrlRoutes"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "UrlServerDeleteUrlRequest": {
+      "type": "object",
+      "properties": {
+        "shortUrl": {
+          "type": "string"
+        },
+        "ownerid": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "UrlServerDeleteUrlResponse": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean"
+        }
+      }
+    },
+    "UrlServerLongUrlResponse": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean"
+        },
+        "LongUrl": {
+          "type": "string"
+        }
+      }
+    },
+    "UrlServerShortUrlRequest": {
+      "type": "object",
+      "properties": {
+        "originalUrl": {
+          "type": "string"
+        },
+        "customAlias": {
+          "type": "string"
+        }
+      }
+    },
+    "UrlServerShortUrlResponse": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean"
+        },
+        "shortUrlKey": {
+          "type": "string"
+        }
+      }
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    }
+  }
+}

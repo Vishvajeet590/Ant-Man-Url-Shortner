@@ -1,0 +1,274 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "api/proto/UserProto/AntmanUser.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "AntmanUserRoutes"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/list": {
+      "get": {
+        "operationId": "AntmanUserRoutes_GetUrlStatList",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/AntmanServerGetStatListResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "jwt",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "AntmanUserRoutes"
+        ]
+      }
+    },
+    "/v1/login": {
+      "post": {
+        "operationId": "AntmanUserRoutes_LoginUser",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/AntmanServerLoginResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/AntmanServerLoginRequest"
+            }
+          }
+        ],
+        "tags": [
+          "AntmanUserRoutes"
+        ]
+      }
+    },
+    "/v1/signup": {
+      "post": {
+        "operationId": "AntmanUserRoutes_CreateNewUser",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/AntmanServerSignUpResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/AntmanServerSignUpRequest"
+            }
+          }
+        ],
+        "tags": [
+          "AntmanUserRoutes"
+        ]
+      }
+    },
+    "/v1/stat/{shortUrl}": {
+      "get": {
+        "operationId": "AntmanUserRoutes_GetUrlStat",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/AntmanServerGetStatResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "shortUrl",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "jwt",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "AntmanUserRoutes"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "AntmanServerGetStatListResponse": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean"
+        },
+        "message": {
+          "type": "string"
+        },
+        "statlList": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/AntmanServerGetStatResponse"
+          }
+        }
+      }
+    },
+    "AntmanServerGetStatResponse": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean"
+        },
+        "message": {
+          "type": "string"
+        },
+        "longUrl": {
+          "type": "string"
+        },
+        "shortUrl": {
+          "type": "string"
+        },
+        "redirects": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "ownerId": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "createdAt": {
+          "type": "string"
+        }
+      }
+    },
+    "AntmanServerLoginRequest": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      }
+    },
+    "AntmanServerLoginResponse": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean"
+        },
+        "message": {
+          "type": "string"
+        },
+        "jwt": {
+          "type": "string"
+        }
+      }
+    },
+    "AntmanServerSignUpRequest": {
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        }
+      }
+    },
+    "AntmanServerSignUpResponse": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean"
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    }
+  }
+}
