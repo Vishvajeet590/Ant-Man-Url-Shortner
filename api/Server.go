@@ -33,7 +33,6 @@ func StartServer() {
 		return
 	}
 
-	//dbUrl := "postgres://vishwajeet:vishvapriya123@localhost:5432/keystore"
 	connPgx, err := pgx.Connect(context.Background(), url)
 	if err != nil {
 		println("Errrorr...")
@@ -99,6 +98,14 @@ func StartServer() {
 			return
 		}
 		http.Redirect(w, r, longUrl, http.StatusSeeOther)
+	})
+	if err != nil {
+		panic(err)
+	}
+
+	err = gwmux.HandlePath("GET", "/", func(w http.ResponseWriter, r *http.Request, pathParams map[string]string) {
+
+		http.ServeFile(w, r, "./never.html")
 	})
 	if err != nil {
 		panic(err)
