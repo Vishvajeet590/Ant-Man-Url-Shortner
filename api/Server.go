@@ -1,13 +1,13 @@
 package api
 
 import (
-	"Ant-Man-Url/api/handler/UrlHandler"
-	"Ant-Man-Url/api/handler/UserHandler"
+	"Ant-Man-Url/api/handler/urlHandler"
+	"Ant-Man-Url/api/handler/userHandler"
 	"Ant-Man-Url/api/middleware"
 	Antman "Ant-Man-Url/api/proto/UrlProto"
 	Antman2 "Ant-Man-Url/api/proto/UserProto"
 	"Ant-Man-Url/infrastructure/repository"
-	"Ant-Man-Url/usecase/Url"
+	url "Ant-Man-Url/usecase/url"
 	"Ant-Man-Url/usecase/user"
 	"context"
 	"fmt"
@@ -27,13 +27,13 @@ func StartServer() {
 	if port == "" {
 		port = "8080" // Default port if not specified
 	}
-	url := os.Getenv("DATABASE_URL")
+	dbUrl := os.Getenv("DATABASE_URL")
 
-	if url == "" {
+	if dbUrl == "" {
 		return
 	}
 
-	connPgx, err := pgx.Connect(context.Background(), url)
+	connPgx, err := pgx.Connect(context.Background(), dbUrl)
 	if err != nil {
 		println("Errrorr...")
 	}
@@ -49,13 +49,13 @@ func StartServer() {
 	s := grpc.NewServer(serverOpt...)
 
 	urlRepo := repository.NewUrlMapSql(connPgx)
-	urlServ := Url.NewService(urlRepo)
+	urlServ := url.NewService(urlRepo)
 
 	userRepo := repository.NewUserSql(connPgx)
 	userServ := user.NewService(userRepo)
 
-	Antman.RegisterAntmanUrlRoutesServer(s, UrlHandler.NewUrlServer(urlServ))
-	Antman2.RegisterAntmanUserRoutesServer(s, UserHandler.NewUserServer(userServ))
+	Antman.RegisterAntmanUrlRoutesServer(s, urlHandler.NewUrlServer(urlServ))
+	Antman2.RegisterAntmanUserRoutesServer(s, userHandler.NewUserServer(userServ))
 	reflection.Register(s)
 
 	log.Printf("server listening at %v", lis.Addr())
